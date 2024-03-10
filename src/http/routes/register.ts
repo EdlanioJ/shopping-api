@@ -3,6 +3,7 @@ import { auth } from '../auth'
 import { db } from '../../db/connection'
 import { hashPassword } from '../../utils/bcrypt'
 import { users } from '../../db/schema'
+import { stripe } from '@/libs/stripe'
 
 export const register = new Elysia().use(auth).post(
   '/register',
@@ -15,6 +16,10 @@ export const register = new Elysia().use(auth).post(
       password: hashedPassword,
     })
 
+    await stripe.customers.create({
+      email,
+      name,
+    })
     set.status = 204
   },
   {
