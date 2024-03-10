@@ -1,0 +1,55 @@
+###
+### login ###
+POST http://localhost:3000/login
+content-type: application/json
+
+{
+    "email": "edlanioj@gmail.com",
+    "password": "12345645"
+}
+
+###
+### Register a new user ###
+POST  http://localhost:3000/register
+content-type: application/json
+
+{
+    "email": "edlanioj@gmail.com",
+    "password": "12345645",
+    "name": "Edlaneo Manuel"
+}
+
+###
+### Get all categories ###
+GET http://localhost:3000/categories
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3dm01dXBlbm5hNHVrNjNwMXczenR4c20iLCJuYW1lIjoiRWRsYW5lbyBNYW51ZWwiLCJleHAiOjE3MDgxMTM0NTl9.exzoeif4Ej2dWbSu2pXx3Q3LEHCtXx4YR3SU-esXI3Y
+
+###
+### Get all products ###
+GET http://localhost:3000/products?category=popular&pageIndex=0
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3dm01dXBlbm5hNHVrNjNwMXczenR4c20iLCJuYW1lIjoiRWRsYW5lbyBNYW51ZWwiLCJleHAiOjE3MDgxMTM0NTl9.exzoeif4Ej2dWbSu2pXx3Q3LEHCtXx4YR3SU-esXI3Y
+
+###
+### Get product details ###
+GET http://localhost:3000/products/xl7iynq0ph8zqvsknu3m25sc
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3dm01dXBlbm5hNHVrNjNwMXczenR4c20iLCJuYW1lIjoiRWRsYW5lbyBNYW51ZWwiLCJleHAiOjE3MDgxMTM0NTl9.exzoeif4Ej2dWbSu2pXx3Q3LEHCtXx4YR3SU-esXI3Y
+
+
+###
+### Get all cart items ###
+GET http://localhost:3000/cart
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3dm01dXBlbm5hNHVrNjNwMXczenR4c20iLCJuYW1lIjoiRWRsYW5lbyBNYW51ZWwiLCJleHAiOjE3MDgxMTM0NTl9.exzoeif4Ej2dWbSu2pXx3Q3LEHCtXx4YR3SU-esXI3Y
+
+###
+### Create payment intent ###
+POST http://localhost:3000/intent
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJreHk5enQ1cmkyNjFtajhndDlrd2RrbzgiLCJuYW1lIjoiRWRsYW5lbyBNYW51ZWwiLCJleHAiOjE3MDg4OTEwNzd9.n4DAk1DlVxxTX6Yj984eqZEn5cMvBF9kio5kaye1kUg
+Content-Type: application/json
+
+{
+    "amount": 1000000
+}

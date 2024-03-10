@@ -1,4 +1,4 @@
-export class InvaildEmailOrPasswordError extends Error {
+export class AuthenticationError extends Error {
   constructor() {
     super('Invalid email or password')
   }

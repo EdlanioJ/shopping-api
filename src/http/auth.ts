@@ -2,7 +2,7 @@ import { bearer } from '@elysiajs/bearer'
 import { Elysia, Static, t } from 'elysia'
 import jwt from '@elysiajs/jwt'
 import { env } from '../env'
-import { InvaildEmailOrPasswordError } from './routes/errors/invalid-email-or-password-error'
+import { AuthenticationError } from './routes/errors/authetication-error'
 import { UnauthorizedError } from './routes/errors/unauthorized-error'
 
 const jwtPayloadSchema = t.Object({
@@ -12,12 +12,13 @@ const jwtPayloadSchema = t.Object({
 
 export const auth = new Elysia()
   .error({
-    INVALID_EMAIL_OR_PASSWORD: InvaildEmailOrPasswordError,
+    AUTHENTICATION: AuthenticationError,
     UNAUTHORIZED: UnauthorizedError,
   })
   .onError(({ code, error, set }) => {
+    console.error(error)
     switch (code) {
-      case 'INVALID_EMAIL_OR_PASSWORD':
+      case 'AUTHENTICATION':
         set.status = 401
         return { code, message: error.message }
       case 'UNAUTHORIZED':
@@ -32,6 +33,7 @@ export const auth = new Elysia()
       secret: env.JWT_SECRET_KEY,
       name: 'jwt',
       exp: '2d',
+      schema: jwtPayloadSchema,
     }),
   )
   .use(bearer())
