@@ -5,18 +5,19 @@ import { login } from './routes/login'
 import { getCart } from './routes/get-cart'
 import { checkout } from './routes/checkout'
 import { register } from './routes/register'
-import { addAdress } from './routes/add-address'
 import { getOrders } from './routes/get-orders'
+import { addAdress } from './routes/add-address'
+import { getProfile } from './routes/get-profile'
 import { getProducts } from './routes/get-products'
 import { addCartItems } from './routes/add-cart-items'
 import { getFavorites } from './routes/get-favorites'
 import { addOrderItems } from './routes/add-order-items'
 import { getCategories } from './routes/get-categories'
 import { getOrderCount } from './routes/get-order-count'
+import { removeFavorite } from './routes/remove-favorite'
 import { getUserReviews } from './routes/get-user-reviews'
 import { updateCartItem } from './routes/update-cart-item'
 import { removeCartItem } from './routes/remove-cart-item'
-import { removeFavorite } from './routes/remove-favorite'
 import { getReviewsCount } from './routes/get-reviews-count'
 import { getUserAddresses } from './routes/get-user-addresses'
 import { getProductDetails } from './routes/get-product-details'
@@ -38,6 +39,7 @@ const app = new Elysia()
   .use(register)
   .use(getOrders)
   .use(addAdress)
+  .use(getProfile)
   .use(getProducts)
   .use(addCartItems)
   .use(getFavorites)
