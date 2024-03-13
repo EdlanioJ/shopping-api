@@ -1,3 +1,4 @@
+import { swagger } from '@elysiajs/swagger'
 import { cors } from '@elysiajs/cors'
 import { Elysia } from 'elysia'
 
@@ -33,6 +34,16 @@ import { updateUserShippingAddress } from './routes/update-user-shipping-address
 
 const app = new Elysia()
   .use(cors())
+  .use(
+    swagger({
+      documentation: {
+        info: {
+          title: 'Shopping Documentation',
+          version: '1.0.0',
+        },
+      },
+    }),
+  )
   .use(login)
   .use(getCart)
   .use(checkout)
