@@ -8,7 +8,11 @@ export const addresses = pgTable('addresses', {
     .$defaultFn(() => createId())
     .primaryKey(),
 
-  owner: text('owner').notNull(),
+  owner: text('owner')
+    .notNull()
+    .references(() => users.id, {
+      onDelete: 'cascade',
+    }),
   name: text('name').notNull(),
   street: text('street').notNull(),
   city: text('city').notNull(),

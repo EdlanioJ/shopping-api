@@ -13,13 +13,17 @@ import { products } from './products'
 export const carts = pgTable(
   'carts',
   {
-    userId: text('user_id').references(() => users.id, {
-      onDelete: 'cascade',
-    }),
+    userId: text('user_id')
+      .notNull()
+      .references(() => users.id, {
+        onDelete: 'cascade',
+      }),
 
-    productId: text('product_id').references(() => products.id, {
-      onDelete: 'cascade',
-    }),
+    productId: text('product_id')
+      .notNull()
+      .references(() => products.id, {
+        onDelete: 'cascade',
+      }),
 
     quantity: integer('quantity').notNull(),
 

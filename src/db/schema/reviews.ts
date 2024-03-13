@@ -10,12 +10,17 @@ export const reviews = pgTable('reviews', {
     .$defaultFn(() => createId())
     .primaryKey(),
 
-  productId: text('product_id').references(() => products.id, {
-    onDelete: 'cascade',
-  }),
-  userId: text('user_id').references(() => users.id, {
-    onDelete: 'cascade',
-  }),
+  productId: text('product_id')
+    .notNull()
+    .references(() => products.id, {
+      onDelete: 'cascade',
+    }),
+
+  userId: text('user_id')
+    .notNull()
+    .references(() => users.id, {
+      onDelete: 'cascade',
+    }),
 
   comment: text('comment').notNull(),
   rating: integer('rating').notNull(),

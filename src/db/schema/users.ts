@@ -10,11 +10,14 @@ import { notifications } from './notifications'
 
 export const users = pgTable('users', {
   id: text('id')
+    .notNull()
     .$defaultFn(() => createId())
     .primaryKey(),
+
   name: text('name').notNull(),
   email: text('email').notNull().unique(),
   password: text('password').notNull(),
+  imageUrl: text('image_url'),
 
   shippingAddress: text('shipping_address').references(() => addresses.id, {
     onDelete: 'set null',
@@ -39,6 +42,7 @@ export const usersRelations = relations(users, ({ one, many }) => ({
     fields: [users.shippingAddress],
     references: [addresses.id],
   }),
+
   reviews: many(reviews),
   addresses: many(addresses),
   notifications: many(notifications),
