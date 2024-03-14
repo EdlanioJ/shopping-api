@@ -13,6 +13,7 @@ import { getProfile } from './routes/get-profile'
 import { getProducts } from './routes/get-products'
 import { addCartItems } from './routes/add-cart-items'
 import { getFavorites } from './routes/get-favorites'
+import { updateProfile } from './routes/update-profile'
 import { addOrderItems } from './routes/add-order-items'
 import { getCategories } from './routes/get-categories'
 import { getOrderCount } from './routes/get-order-count'
@@ -42,15 +43,6 @@ const app = new Elysia()
           title: 'Shopping Documentation',
           version: '1.0.0',
         },
-        components: {
-          securitySchemes: {
-            JwtAuth: {
-              type: 'http',
-              scheme: 'bearer',
-              bearerFormat: 'JWT',
-            },
-          },
-        },
       },
     }),
   )
@@ -65,6 +57,7 @@ const app = new Elysia()
   .use(getProducts)
   .use(addCartItems)
   .use(getFavorites)
+  .use(updateProfile)
   .use(addOrderItems)
   .use(getCategories)
   .use(getOrderCount)

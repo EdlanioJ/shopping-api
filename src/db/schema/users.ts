@@ -10,7 +10,6 @@ import { notifications } from './notifications'
 
 export const users = pgTable('users', {
   id: text('id')
-    .notNull()
     .$defaultFn(() => createId())
     .primaryKey(),
 
