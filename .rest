@@ -53,3 +53,19 @@ Content-Type: application/json
 {
     "amount": 1000000
 }
+
+
+###
+### Upload ###
+POST http://localhost:3000/upload
+Content-Type: multipart/form-data; boundary=MfnBoundry
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjdnJwaHo5Nm4ydHVpNnBmeXltdnpvNHAiLCJuYW1lIjoiRWRsYW5lbyBNYW51ZWwiLCJleHAiOjE3MTA1MjQ5NTh9.D7nnhE1c4rHn4RuoxIvgV79MBXwpRgKo_RBfypO_cm0
+
+--MfnBoundry
+Content-Disposition: form-data; name="file"; filename="apple.png"
+Content-Type: image/png
+
+< ./img/apple.png
+
+--MfnBoundry--
+

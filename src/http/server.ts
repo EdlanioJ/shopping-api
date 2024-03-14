@@ -3,6 +3,7 @@ import { cors } from '@elysiajs/cors'
 import { Elysia } from 'elysia'
 
 import { login } from './routes/login'
+import { upload } from './routes/upload'
 import { getCart } from './routes/get-cart'
 import { checkout } from './routes/checkout'
 import { register } from './routes/register'
@@ -41,10 +42,20 @@ const app = new Elysia()
           title: 'Shopping Documentation',
           version: '1.0.0',
         },
+        components: {
+          securitySchemes: {
+            JwtAuth: {
+              type: 'http',
+              scheme: 'bearer',
+              bearerFormat: 'JWT',
+            },
+          },
+        },
       },
     }),
   )
   .use(login)
+  .use(upload)
   .use(getCart)
   .use(checkout)
   .use(register)
