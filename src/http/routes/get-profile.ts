@@ -13,6 +13,7 @@ export const getProfile = new Elysia()
         id: true,
         name: true,
         imageUrl: true,
+        email: true,
       },
     })
 
