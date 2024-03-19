@@ -30,7 +30,7 @@ export const getProductReviews = new Elysia().use(auth).get(
         name: products.name,
         image: products.image,
         reviewsCount: sql`count(${reviews.id})`.mapWith(Number),
-        ratingAvg: avg(reviews.rating),
+        ratingAvg: avg(reviews.rating).mapWith(Number),
       })
       .from(products)
       .where(eq(products.id, id))
@@ -51,5 +51,27 @@ export const getProductReviews = new Elysia().use(auth).get(
     query: t.Object({
       pageIndex: t.Numeric({ minimum: 0 }),
     }),
+    response: {
+      200: t.Object({
+        product: t.Object({
+          id: t.String(),
+          name: t.String(),
+          image: t.String(),
+          reviewsCount: t.Number({ default: 0 }),
+          ratingAvg: t.Number({ default: 0 }),
+        }),
+        reviews: t.Array(
+          t.Object({
+            id: t.String(),
+            userName: t.String(),
+            rating: t.Number({ default: 0 }),
+            comment: t.String(),
+            createdAt: t.Nullable(t.Date()),
+          }),
+        ),
+        pageIndex: t.Number({ default: 0 }),
+        perPage: t.Number({ default: 10 }),
+      }),
+    },
   },
 )

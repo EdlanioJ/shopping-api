@@ -39,5 +39,17 @@ export const getProductDetails = new Elysia().use(auth).get(
     params: t.Object({
       id: t.String(),
     }),
+    response: {
+      200: t.Object({
+        id: t.String(),
+        name: t.String(),
+        image: t.String(),
+        pricePriceInCents: t.Number({ default: 0 }),
+        description: t.Nullable(t.String()),
+        review: t.Number({ default: 0 }),
+        rating: t.Number({ default: 0 }),
+        isFavorite: t.Boolean(),
+      }),
+    },
   },
 )

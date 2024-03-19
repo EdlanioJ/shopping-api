@@ -40,5 +40,22 @@ export const getOrders = new Elysia().use(auth).get(
       pageIndex: t.Numeric({ minimum: 0 }),
       status: createSelectSchema(orders).properties.status,
     }),
+    response: {
+      200: t.Object({
+        orders: t.Array(
+          t.Object({
+            id: t.String(),
+            status: createSelectSchema(orders).properties.status,
+            totalInCents: t.Number({ default: 0 }),
+            createdAt: t.Nullable(t.Date()),
+            quantity: t.Number({ default: 0 }),
+          }),
+        ),
+
+        pageIndex: t.Number({ default: 0 }),
+        perPage: t.Number({ default: 10 }),
+        totalCount: t.Number({ default: 0 }),
+      }),
+    },
   },
 )

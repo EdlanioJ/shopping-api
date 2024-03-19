@@ -41,5 +41,20 @@ export const getProducts = new Elysia().use(auth).get(
       category: t.String({ default: 'popular' }),
       pageIndex: t.Numeric({ minimum: 0 }),
     }),
+    response: {
+      200: t.Object({
+        products: t.Array(
+          t.Object({
+            id: t.String(),
+            name: t.String(),
+            image: t.String(),
+            priceInCents: t.Number({ default: 0 }),
+          }),
+        ),
+        pageIndex: t.Number({ default: 0 }),
+        perPage: t.Number({ default: 10 }),
+        totalCount: t.Number({ default: 0 }),
+      }),
+    },
   },
 )

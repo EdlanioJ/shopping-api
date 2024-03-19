@@ -6,7 +6,7 @@ import { db } from '@/db/connection'
 
 export const createPaymentIntent = new Elysia().use(auth).post(
   '/payment/intents',
-  async ({ getCurrentUser, body }) => {
+  async ({ getCurrentUser, body, set }) => {
     const { sub } = await getCurrentUser()
     const { amount } = body
 
@@ -34,6 +34,8 @@ export const createPaymentIntent = new Elysia().use(auth).post(
       },
     })
 
+    set.status = 'Created'
+
     return {
       paymentIntent: paymentIntent.client_secret,
       ephemeralKey: ephemeralKey.secret,
@@ -44,5 +46,13 @@ export const createPaymentIntent = new Elysia().use(auth).post(
     body: t.Object({
       amount: t.Integer(),
     }),
+
+    response: {
+      201: t.Object({
+        paymentIntent: t.String(),
+        ephemeralKey: t.String(),
+        customerId: t.String(),
+      }),
+    },
   },
 )

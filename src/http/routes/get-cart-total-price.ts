@@ -1,12 +1,12 @@
-import { Elysia } from 'elysia'
+import { Elysia, t } from 'elysia'
 import { auth } from '../auth'
 import { db } from '@/db/connection'
 import { carts, products } from '@/db/schema'
 import { eq, sql } from 'drizzle-orm'
 
-export const getCartTotalPrice = new Elysia()
-  .use(auth)
-  .get('/cart/price', async ({ getCurrentUser }) => {
+export const getCartTotalPrice = new Elysia().use(auth).get(
+  '/cart/price',
+  async ({ getCurrentUser }) => {
     const { sub } = await getCurrentUser()
     const sq = db
       .select()
@@ -26,4 +26,8 @@ export const getCartTotalPrice = new Elysia()
     return {
       totalInCents: totalCartItems.totalInCents,
     }
-  })
+  },
+  {
+    response: { 200: t.Object({ totalInCents: t.Number() }) },
+  },
+)

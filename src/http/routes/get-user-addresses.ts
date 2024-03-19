@@ -1,10 +1,10 @@
-import { Elysia } from 'elysia'
+import { Elysia, t } from 'elysia'
 import { auth } from '../auth'
 import { db } from '@/db/connection'
 
-export const getUserAddresses = new Elysia()
-  .use(auth)
-  .get('/addresses', async ({ getCurrentUser }) => {
+export const getUserAddresses = new Elysia().use(auth).get(
+  '/addresses',
+  async ({ getCurrentUser }) => {
     const { sub } = await getCurrentUser()
 
     const addresses = await db.query.addresses.findMany({
@@ -33,4 +33,25 @@ export const getUserAddresses = new Elysia()
       })),
       shippingAddress: user?.shippingAddress,
     }
-  })
+  },
+  {
+    response: {
+      200: t.Object({
+        addresses: t.Array(
+          t.Object({
+            id: t.String(),
+            name: t.String(),
+            address: t.Object({
+              street: t.String(),
+              city: t.String(),
+              state: t.String(),
+              zipCode: t.String(),
+              country: t.String(),
+            }),
+          }),
+        ),
+        shippingAddress: t.Nullable(t.String()),
+      }),
+    },
+  },
+)

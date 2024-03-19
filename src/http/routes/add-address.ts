@@ -5,7 +5,7 @@ import { addresses } from '@/db/schema'
 
 export const addAdress = new Elysia().use(auth).post(
   '/addresses',
-  async ({ getCurrentUser, body }) => {
+  async ({ getCurrentUser, body, set }) => {
     const { sub } = await getCurrentUser()
     await db.insert(addresses).values({
       owner: sub,
@@ -16,6 +16,8 @@ export const addAdress = new Elysia().use(auth).post(
       zipCode: body.zipCode,
       country: body.country,
     })
+
+    set.status = 'No Content'
   },
   {
     body: t.Object({
@@ -26,5 +28,9 @@ export const addAdress = new Elysia().use(auth).post(
       country: t.String({ minLength: 1 }),
       zipCode: t.String({ minLength: 1 }),
     }),
+
+    response: {
+      204: t.Void(),
+    },
   },
 )

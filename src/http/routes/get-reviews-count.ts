@@ -1,12 +1,12 @@
-import { Elysia } from 'elysia'
+import { Elysia, t } from 'elysia'
 import { auth } from '../auth'
 import { db } from '@/db/connection'
 import { eq, sql } from 'drizzle-orm'
 import { reviews } from '@/db/schema'
 
-export const getReviewsCount = new Elysia()
-  .use(auth)
-  .get('/reviews/count', async ({ getCurrentUser }) => {
+export const getReviewsCount = new Elysia().use(auth).get(
+  '/reviews/count',
+  async ({ getCurrentUser }) => {
     const { sub } = await getCurrentUser()
     const [review] = await db
       .select({
@@ -17,4 +17,12 @@ export const getReviewsCount = new Elysia()
       .groupBy(reviews.userId)
 
     return { count: review?.count ?? 0 }
-  })
+  },
+  {
+    response: {
+      200: t.Object({
+        count: t.Number({ default: 0 }),
+      }),
+    },
+  },
+)

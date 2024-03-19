@@ -6,7 +6,7 @@ import { eq } from 'drizzle-orm'
 
 export const updateUserShippingAddress = new Elysia().use(auth).put(
   '/user/shipping/:addressId',
-  async ({ getCurrentUser, params }) => {
+  async ({ getCurrentUser, params, set }) => {
     const { sub } = await getCurrentUser()
     const { addressId } = params
 
@@ -14,8 +14,11 @@ export const updateUserShippingAddress = new Elysia().use(auth).put(
       .update(users)
       .set({ shippingAddress: addressId })
       .where(eq(users.id, sub))
+
+    set.status = 'No Content'
   },
   {
     params: t.Object({ addressId: t.String({ minLength: 1 }) }),
+    response: { 204: t.Void() },
   },
 )

@@ -20,7 +20,7 @@ export const register = new Elysia().use(auth).post(
       email,
       name,
     })
-    set.status = 204
+    set.status = 'No Content'
   },
   {
     body: t.Object({
@@ -28,5 +28,8 @@ export const register = new Elysia().use(auth).post(
       email: t.String({ format: 'email' }),
       password: t.String({ minLength: 8 }),
     }),
+    response: {
+      204: t.Void(),
+    },
   },
 )

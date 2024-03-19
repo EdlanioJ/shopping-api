@@ -7,7 +7,7 @@ import { auth } from '../auth'
 
 export const login = new Elysia().use(auth).post(
   '/login',
-  async ({ body, generateToken, set }) => {
+  async ({ body, generateToken }) => {
     const { email, password } = body
 
     const user = await db.query.users.findFirst({
@@ -19,7 +19,6 @@ export const login = new Elysia().use(auth).post(
     if (!isMatch) throw new AuthenticationError()
 
     const accessToken = await generateToken({ sub: user.id, name: user.name })
-    set.status = 200
     return { accessToken }
   },
   {
@@ -27,5 +26,8 @@ export const login = new Elysia().use(auth).post(
       email: t.String({ format: 'email' }),
       password: t.String({ minLength: 8 }),
     }),
+    response: {
+      200: t.Object({ accessToken: t.String() }),
+    },
   },
 )

@@ -1,12 +1,12 @@
-import { Elysia } from 'elysia'
+import { Elysia, t } from 'elysia'
 import { auth } from '../auth'
 import { db } from '@/db/connection'
 import { carts, orderItems, orders, products } from '@/db/schema'
 import { eq } from 'drizzle-orm'
 
-export const checkout = new Elysia()
-  .use(auth)
-  .post('/checkout', async ({ getCurrentUser }) => {
+export const checkout = new Elysia().use(auth).post(
+  '/checkout',
+  async ({ getCurrentUser, set }) => {
     const { sub } = await getCurrentUser()
     const cartItems = await db
       .select({
@@ -42,4 +42,9 @@ export const checkout = new Elysia()
     )
 
     await db.delete(carts).where(eq(carts.userId, sub))
-  })
+    set.status = 'No Content'
+  },
+  {
+    response: { 204: t.Void() },
+  },
+)

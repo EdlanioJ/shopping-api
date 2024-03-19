@@ -1,12 +1,12 @@
-import { Elysia } from 'elysia'
+import { Elysia, t } from 'elysia'
 import { auth } from '../auth'
 import { db } from '@/db/connection'
 import { addresses, users } from '@/db/schema'
 import { eq } from 'drizzle-orm'
 
-export const getUserShippingAddress = new Elysia()
-  .use(auth)
-  .get('/address/shipping', async ({ getCurrentUser }) => {
+export const getUserShippingAddress = new Elysia().use(auth).get(
+  '/address/shipping',
+  async ({ getCurrentUser }) => {
     const { sub } = await getCurrentUser()
 
     const [address] = await db
@@ -36,4 +36,20 @@ export const getUserShippingAddress = new Elysia()
         country: address.country,
       },
     }
-  })
+  },
+  {
+    response: {
+      200: t.Object({
+        id: t.String(),
+        name: t.String(),
+        address: t.Object({
+          street: t.String(),
+          city: t.String(),
+          state: t.String(),
+          zipCode: t.Nullable(t.String()),
+          country: t.Nullable(t.String()),
+        }),
+      }),
+    },
+  },
+)

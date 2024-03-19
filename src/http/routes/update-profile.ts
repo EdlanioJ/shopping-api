@@ -6,7 +6,7 @@ import { eq } from 'drizzle-orm'
 
 export const updateProfile = new Elysia().use(auth).put(
   '/profile',
-  async ({ body, getCurrentUser }) => {
+  async ({ body, getCurrentUser, set }) => {
     const { sub } = await getCurrentUser()
     const { email, imageUrl, name } = body
     await db
@@ -17,6 +17,8 @@ export const updateProfile = new Elysia().use(auth).put(
         name,
       })
       .where(eq(users.id, sub))
+
+    set.status = 'No Content'
   },
   {
     body: t.Partial(
@@ -26,5 +28,6 @@ export const updateProfile = new Elysia().use(auth).put(
         imageUrl: t.String(),
       }),
     ),
+    response: { 204: t.Void() },
   },
 )

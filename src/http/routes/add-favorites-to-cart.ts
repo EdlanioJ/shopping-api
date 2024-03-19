@@ -1,12 +1,12 @@
-import { Elysia } from 'elysia'
+import { Elysia, t } from 'elysia'
 import { auth } from '../auth'
 import { db } from '@/db/connection'
 import { carts, favorites } from '@/db/schema'
 import { eq } from 'drizzle-orm'
 
-export const addFavoritesToCart = new Elysia()
-  .use(auth)
-  .post('/favorites/cart', async ({ getCurrentUser, set }) => {
+export const addFavoritesToCart = new Elysia().use(auth).post(
+  '/favorites/cart',
+  async ({ getCurrentUser, set }) => {
     const { sub } = await getCurrentUser()
 
     const favoriteItems = await db.query.favorites.findMany({
@@ -30,4 +30,10 @@ export const addFavoritesToCart = new Elysia()
     await db.delete(favorites).where(eq(favorites.userId, sub))
 
     set.status = 'No Content'
-  })
+  },
+  {
+    response: {
+      204: t.Void(),
+    },
+  },
+)

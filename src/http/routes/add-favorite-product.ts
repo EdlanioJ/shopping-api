@@ -17,11 +17,15 @@ export const addFavoriteProduct = new Elysia().use(auth).post(
     if (favorite) throw new Error('Product already in favorites')
 
     await db.insert(favorites).values({ userId: sub, productId })
-    set.status = 201
+    set.status = 'No Content'
   },
   {
     params: t.Object({
       productId: t.String(),
     }),
+
+    response: {
+      204: t.Void(),
+    },
   },
 )

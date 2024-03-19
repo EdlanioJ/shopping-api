@@ -32,5 +32,11 @@ export const upload = new Elysia().use(auth).post(
         maxSize: '5m',
       }),
     }),
+    response: {
+      200: t.Object({
+        uuid: t.String(),
+        imageUrl: t.String(),
+      }),
+    },
   },
 )

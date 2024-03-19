@@ -6,7 +6,7 @@ import { and, eq } from 'drizzle-orm'
 
 export const removeFavorite = new Elysia().use(auth).delete(
   '/favorites/:productId',
-  async ({ getCurrentUser, params }) => {
+  async ({ getCurrentUser, params, set }) => {
     const { sub } = await getCurrentUser()
     const { productId } = params
     console.log(productId)
@@ -14,10 +14,13 @@ export const removeFavorite = new Elysia().use(auth).delete(
     await db
       .delete(favorites)
       .where(and(eq(favorites.userId, sub), eq(favorites.productId, productId)))
+
+    set.status = 'No Content'
   },
   {
     params: t.Object({
       productId: t.String(),
     }),
+    response: { 204: t.Void() },
   },
 )

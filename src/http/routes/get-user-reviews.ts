@@ -38,5 +38,24 @@ export const getUserReviews = new Elysia().use(auth).get(
     query: t.Object({
       pageIndex: t.Numeric({ minimum: 0 }),
     }),
+
+    response: {
+      200: t.Object({
+        reviews: t.Array(
+          t.Object({
+            id: t.String(),
+            rating: t.Number({ default: 0 }),
+            comment: t.String(),
+            productName: t.String(),
+            createdAt: t.Nullable(t.Date()),
+            productId: t.String(),
+            productImage: t.String(),
+          }),
+        ),
+        pageIndex: t.Number({ default: 0 }),
+        perPage: t.Number({ default: 10 }),
+        totalCount: t.Number({ default: 0 }),
+      }),
+    },
   },
 )

@@ -20,7 +20,7 @@ export const addCartItems = new Elysia().use(auth).post(
       )
       .onConflictDoNothing({ target: [carts.productId, carts.userId] })
 
-    set.status = 201
+    set.status = 'No Content'
   },
   {
     body: t.Object({
@@ -31,5 +31,8 @@ export const addCartItems = new Elysia().use(auth).post(
         }),
       ),
     }),
+    response: {
+      204: t.Void(),
+    },
   },
 )

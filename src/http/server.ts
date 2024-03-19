@@ -33,6 +33,7 @@ import { createPaymentIntent } from './routes/create-payment-intent'
 import { getUserNotifications } from './routes/get-user-notifications'
 import { getUserShippingAddress } from './routes/get-user-shipping-address'
 import { updateUserShippingAddress } from './routes/update-user-shipping-address'
+import { env } from '@/env'
 
 const app = new Elysia()
   .use(cors())
@@ -40,10 +41,11 @@ const app = new Elysia()
     swagger({
       documentation: {
         info: {
-          title: 'Shopping Documentation',
+          title: 'Shopping API Documentation',
           version: '1.0.0',
         },
       },
+      path: '/docs',
     }),
   )
   .use(login)
@@ -78,7 +80,8 @@ const app = new Elysia()
   .use(getUserShippingAddress)
   .use(updateUserShippingAddress)
 
-app.listen(3000)
+const port = env.PORT
+app.listen(port)
 
 console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`,

@@ -5,7 +5,7 @@ import { orderItems, orders } from '@/db/schema'
 
 export const addOrderItems = new Elysia().use(auth).post(
   '/orders',
-  async ({ body, getCurrentUser }) => {
+  async ({ body, getCurrentUser, set }) => {
     const { sub } = await getCurrentUser()
     const { items } = body
 
@@ -44,6 +44,8 @@ export const addOrderItems = new Elysia().use(auth).post(
         }
       }),
     )
+
+    set.status = 'No Content'
   },
   {
     body: t.Object({
@@ -54,5 +56,9 @@ export const addOrderItems = new Elysia().use(auth).post(
         }),
       ),
     }),
+
+    response: {
+      204: t.Void(),
+    },
   },
 )
