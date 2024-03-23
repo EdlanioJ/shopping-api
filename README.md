@@ -260,7 +260,7 @@ Content-Length: 0
 ##### Request
 
 ```http
-  GET /cart
+GET /cart
 ```
 
 ```sh
@@ -304,11 +304,11 @@ Content-Length: 297
 ##### Request
 
 ```http
-  GET /cart/price
+GET /cart/price
 ```
 
 ```sh
-  curl --request GET --url 'http://localhost:3000/cart/price' --header 'Authorization: Bearer YOUR_TOKEN'
+curl --request GET --url 'http://localhost:3000/cart/price' --header 'Authorization: Bearer YOUR_TOKEN'
 ```
 
 ##### Response
@@ -329,6 +329,34 @@ Content-Length: 121
   "totalInCents": 1299900
 }
 ```
+
+#### Delete Cart Ptoduct
+<p>Delete a product from cart</p>
+
+##### Request
+
+```http
+DELETE /cart/{productId}
+```
+
+```sh
+curl --request DELETE --url 'http://localhost:3000/cart/mz2nk6csoc6p2mewmfoya8s4' --header 'Authorization: Bearer YOUR_TOKEN'
+```
+
+##### Response
+
+```http
+HTTP/1.1 204 No Content
+Access-Control-Allow-Headers: *
+Access-Control-Allow-Credentials: true
+Vary: *
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: DELETE
+Access-Control-Exposed-Headers: *
+Date: Sat, 23 Mar 2024 21:43:42 GMT
+Content-Length: 0
+```
+
 ## License
 
 This project is under the MIT license. See the [LICENSE](LICENSE) file for more details.
