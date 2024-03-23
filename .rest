@@ -27,15 +27,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3dm01dXBlbm5hNHVrNjNwMXcze
 
 ###
 ### Get all products ###
-GET http://localhost:3000/products?category=popular&pageIndex=0
+GET http://localhost:3000/products?category=popular&pageIndex=1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3dm01dXBlbm5hNHVrNjNwMXczenR4c20iLCJuYW1lIjoiRWRsYW5lbyBNYW51ZWwiLCJleHAiOjE3MDgxMTM0NTl9.exzoeif4Ej2dWbSu2pXx3Q3LEHCtXx4YR3SU-esXI3Y
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjdnJwaHo5Nm4ydHVpNnBmeXltdnpvNHAiLCJuYW1lIjoiRWRsYW5lbyBNYW51ZWwiLCJleHAiOjE3MTEyOTA2Njl9.BHksIP6varCThH0Cd5HmfxgYWkjwvVLNCJskySbWz6k
 
 ###
 ### Get product details ###
-GET http://localhost:3000/products/xl7iynq0ph8zqvsknu3m25sc
+GET http://localhost:3000/products/mz2nk6csoc6p2mewmfoya8s4
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3dm01dXBlbm5hNHVrNjNwMXczenR4c20iLCJuYW1lIjoiRWRsYW5lbyBNYW51ZWwiLCJleHAiOjE3MDgxMTM0NTl9.exzoeif4Ej2dWbSu2pXx3Q3LEHCtXx4YR3SU-esXI3Y
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjdnJwaHo5Nm4ydHVpNnBmeXltdnpvNHAiLCJuYW1lIjoiRWRsYW5lbyBNYW51ZWwiLCJleHAiOjE3MTEzODY1Mjl9.jH1KSgP4rIHaiqMORKdT--4F26H_3u17HN1M3pEPGHs
 
 
 ###

@@ -2,7 +2,7 @@ import { Elysia, t } from 'elysia'
 import { auth } from '../auth'
 import { db } from '../../db/connection'
 import { products, reviews } from '@/db/schema'
-import { avg, eq, sql } from 'drizzle-orm'
+import { eq, sql } from 'drizzle-orm'
 
 export const getProductDetails = new Elysia().use(auth).get(
   '/products/:id',
@@ -19,7 +19,7 @@ export const getProductDetails = new Elysia().use(auth).get(
         pricePriceInCents: products.priceInCents,
         description: products.description,
         review: sql`count(${reviews.id})`.mapWith(Number),
-        rating: avg(reviews.rating).mapWith(Number),
+        rating: sql`avg(${reviews.rating})`.mapWith(Number),
       })
       .from(products)
       .where(eq(products.id, id))
@@ -47,7 +47,7 @@ export const getProductDetails = new Elysia().use(auth).get(
         pricePriceInCents: t.Number({ default: 0 }),
         description: t.Nullable(t.String()),
         review: t.Number({ default: 0 }),
-        rating: t.Number({ default: 0 }),
+        rating: t.Nullable(t.Number({ default: 0 })),
         isFavorite: t.Boolean(),
       }),
     },
