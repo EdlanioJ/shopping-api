@@ -70,7 +70,7 @@ POST /register
 ```
 
 ```sh
-curl --request POST --url http://localhost:3000/register --header 'Content-Type: application/json' --data '{ "name": "Foo", "email": "foo@example.com", "password": "12345672" }'
+curl --request POST --url 'http://localhost:3000/register' --header 'Content-Type: application/json' --data '{ "name": "Foo", "email": "foo@example.com", "password": "12345672" }'
 ```
 
 
@@ -97,7 +97,7 @@ POST /login
 ```
 
 ```sh
-curl --request POST --url http://localhost:3000/login --header 'Content-Type: application/json' --data '{ "email": "foo@example.com", "password": "12345672" }'
+curl --request POST --url 'http://localhost:3000/login' --header 'Content-Type: application/json' --data '{ "email": "foo@example.com", "password": "12345672" }'
 ```
 ##### Response
 
@@ -130,7 +130,7 @@ GET /products
 ```
 
 ```sh
-curl --request GET -H "Authorization: Bearer YOUR_TOKEN" --url 'http://localhost:3000/products?category=popular&pageIndex=0'
+curl --request GET --url 'http://localhost:3000/products?category=popular&pageIndex=0' --header 'Authorization: Bearer YOUR_TOKEN'
 ```
 
 ##### Response
@@ -171,7 +171,7 @@ Content-Length: 426
 ```
 
 ```sh
-  curl --request GET -H "Authorization: Bearer YOUR_TOKEN" --url 'http://localhost:3000/products/mz2nk6csoc6p2mewmfoya8s4'
+  curl --request GET  --url 'http://localhost:3000/products/mz2nk6csoc6p2mewmfoya8s4' --header 'Authorization: Bearer YOUR_TOKEN'
 ```
 
 ##### Response
@@ -200,6 +200,135 @@ Content-Length: 337
 }
 ```
 
+### Cart
+
+#### Add Product to Cart
+<p>Add a product to cart</p>
+
+##### Request
+```http
+  POST /cart
+```
+
+```sh
+curl --request POST --url 'http://localhost:3000/cart' --header 'Authorization: Bearer YOUR_TOKEN' --header 'Content-Type: application/json' --data '{ "items": [{"productId": "mz2nk6csoc6p2mewmfoya8s4", "quantity": 1 }] }'
+```
+
+##### Response
+
+```http
+HTTP/1.1 204 No Content
+Access-Control-Allow-Headers: *
+Access-Control-Allow-Credentials: true
+Vary: *
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: POST
+Access-Control-Exposed-Headers: *
+Date: Sat, 23 Mar 2024 17:17:27 GMT
+Content-Length: 0
+```
+#### Update Product in Cart
+<p>Update a product in cart</p>
+
+##### Request
+
+```http
+PUT /cart/{productId}
+```
+
+```sh
+curl --request PUT --url 'http://localhost:3000/cart/mz2nk6csoc6p2mewmfoya8s4' --header 'Authorization: Bearer YOUR_TOKEN' --header 'Content-Type: application/json' --data '{ "quantity": 2 }'
+```
+
+##### Response
+
+```http
+HTTP/1.1 204 No Content
+Access-Control-Allow-Headers: *
+Access-Control-Allow-Credentials: true
+Vary: *
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: POST
+Access-Control-Exposed-Headers: *
+Date: Sat, 23 Mar 2024 17:17:27 GMT
+Content-Length: 0
+```
+
+#### Get Cart
+<p>Get cart items</p>
+
+##### Request
+
+```http
+  GET /cart
+```
+
+```sh
+curl --request GET --url 'http://localhost:3000/cart?pageIndex=0' --header 'Authorization: Bearer YOUR_TOKEN'
+```
+
+##### Response
+
+```http
+HTTP/1.1 200 OK
+Access-Control-Allow-Headers: *
+Access-Control-Allow-Credentials: true
+Vary: *
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET
+Content-Type: application/json;charset=utf-8
+Access-Control-Exposed-Headers: *
+Date: Sat, 23 Mar 2024 21:43:42 GMT
+Content-Length: 297
+
+{
+  "products": [
+    {
+      "name": "Floor Lamp with Reading Light",
+      "id": "mz2nk6csoc6p2mewmfoya8s4",
+      "image": "https://ucarecdn.com/b6d6ba6e-21e8-4781-9ffa-5249341267a1/FloorLampwithReadingLight.jpg",
+      "priceInCents": 1299900,
+      "stock": 10,
+      "quantity": 1
+    }
+  ],
+  "totalInCents": 1299900,
+  "pageIndex": 0,
+  "perPage": 10,
+  "totalCount": 1
+}
+```
+
+#### Get Cart price 
+
+##### Request
+
+```http
+  GET /cart/price
+```
+
+```sh
+  curl --request GET --url 'http://localhost:3000/cart/price' --header 'Authorization: Bearer YOUR_TOKEN'
+```
+
+##### Response
+
+```http
+HTTP/1.1 200 OK
+Access-Control-Allow-Headers: *
+Access-Control-Allow-Credentials: true
+Vary: *
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET
+Content-Type: application/json;charset=utf-8
+Access-Control-Exposed-Headers: *
+Date: Sat, 23 Mar 2024 21:43:42 GMT
+Content-Length: 121
+
+{
+  "totalInCents": 1299900
+}
+```
 ## License
 
 This project is under the MIT license. See the [LICENSE](LICENSE) file for more details.

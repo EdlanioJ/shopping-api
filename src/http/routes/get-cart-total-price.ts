@@ -28,6 +28,6 @@ export const getCartTotalPrice = new Elysia().use(auth).get(
     }
   },
   {
-    response: { 200: t.Object({ totalInCents: t.Number() }) },
+    response: { 200: t.Object({ totalInCents: t.Nullable(t.Number()) }) },
   },
 )

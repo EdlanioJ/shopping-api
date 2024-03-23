@@ -61,7 +61,7 @@ export const getCart = new Elysia().use(auth).get(
             priceInCents: t.Number({ default: 0 }),
           }),
         ),
-        totalInCents: t.Number({ default: 0 }),
+        totalInCents: t.Nullable(t.Number({ default: 0 })),
         pageIndex: t.Number({ default: 0 }),
         perPage: t.Number({ default: 10 }),
         totalCount: t.Number({ default: 0 }),

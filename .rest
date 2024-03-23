@@ -37,12 +37,11 @@ GET http://localhost:3000/products/mz2nk6csoc6p2mewmfoya8s4
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjdnJwaHo5Nm4ydHVpNnBmeXltdnpvNHAiLCJuYW1lIjoiRWRsYW5lbyBNYW51ZWwiLCJleHAiOjE3MTEzODY1Mjl9.jH1KSgP4rIHaiqMORKdT--4F26H_3u17HN1M3pEPGHs
 
-
 ###
 ### Get all cart items ###
-GET http://localhost:3000/cart
+GET http://localhost:3000/cart?pageIndex=0
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3dm01dXBlbm5hNHVrNjNwMXczenR4c20iLCJuYW1lIjoiRWRsYW5lbyBNYW51ZWwiLCJleHAiOjE3MDgxMTM0NTl9.exzoeif4Ej2dWbSu2pXx3Q3LEHCtXx4YR3SU-esXI3Y
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjdnJwaHo5Nm4ydHVpNnBmeXltdnpvNHAiLCJuYW1lIjoiRWRsYW5lbyBNYW51ZWwiLCJleHAiOjE3MTEzODY1Mjl9.jH1KSgP4rIHaiqMORKdT--4F26H_3u17HN1M3pEPGHs
 
 ###
 ### Create payment intent ###
