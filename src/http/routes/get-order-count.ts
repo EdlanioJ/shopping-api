@@ -5,7 +5,7 @@ import { db } from '@/db/connection'
 import { orders } from '@/db/schema'
 
 export const getOrderCount = new Elysia().use(auth).get(
-  '/orders/count',
+  '/count',
   async ({ getCurrentUser }) => {
     const { sub } = await getCurrentUser()
 
@@ -22,7 +22,7 @@ export const getOrderCount = new Elysia().use(auth).get(
   {
     response: {
       200: t.Object({
-        count: t.Number({ default: 0 }),
+        count: t.Number(),
       }),
     },
   },

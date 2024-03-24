@@ -48,37 +48,45 @@ const app = new Elysia()
       path: '/docs',
     }),
   )
-  .use(login)
+  .group('/auth', (router) => router.use(login).use(register))
+  .group('/addresses', (router) =>
+    router
+      .use(addAdress)
+      .use(getUserAddresses)
+      .use(getAddressesCount)
+      .use(getUserShippingAddress)
+      .use(updateUserShippingAddress),
+  )
+  .group('/cart', (router) =>
+    router
+      .use(getCart)
+      .use(addCartItems)
+      .use(updateCartItem)
+      .use(removeCartItem)
+      .use(getCartTotalPrice),
+  )
+  .group('/favorites', (router) =>
+    router
+      .use(getFavorites)
+      .use(removeFavorite)
+      .use(addFavoriteProduct)
+      .use(addFavoritesToCart),
+  )
+  .group('/orders', (router) =>
+    router.use(getOrders).use(addOrderItems).use(getOrderCount),
+  )
+  .group('/products', (router) =>
+    router.use(getProducts).use(getProductDetails).use(getProductReviews),
+  )
+  .group('/reviews', (router) =>
+    router.use(getUserReviews).use(getReviewsCount),
+  )
+  .group('/profile', (router) => router.use(getProfile).use(updateProfile))
   .use(upload)
-  .use(getCart)
   .use(checkout)
-  .use(register)
-  .use(getOrders)
-  .use(addAdress)
-  .use(getProfile)
-  .use(getProducts)
-  .use(addCartItems)
-  .use(getFavorites)
-  .use(updateProfile)
-  .use(addOrderItems)
   .use(getCategories)
-  .use(getOrderCount)
-  .use(getUserReviews)
-  .use(removeFavorite)
-  .use(updateCartItem)
-  .use(removeCartItem)
-  .use(getReviewsCount)
-  .use(getUserAddresses)
-  .use(getCartTotalPrice)
-  .use(getProductDetails)
-  .use(getProductReviews)
-  .use(getAddressesCount)
-  .use(addFavoriteProduct)
-  .use(addFavoritesToCart)
   .use(createPaymentIntent)
   .use(getUserNotifications)
-  .use(getUserShippingAddress)
-  .use(updateUserShippingAddress)
 
 const port = env.PORT
 app.listen(port)

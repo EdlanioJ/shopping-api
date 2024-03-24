@@ -7,10 +7,11 @@ import { db } from '@/db/connection'
 import { and, count, eq, sql } from 'drizzle-orm'
 
 export const getOrders = new Elysia().use(auth).get(
-  '/orders',
+  '/',
   async ({ getCurrentUser, query }) => {
     const { sub } = await getCurrentUser()
-    const { status, pageIndex } = query
+    const pageIndex = query.pageIndex ?? 0
+    const status = query.status
 
     const sq = db
       .select({
@@ -32,12 +33,12 @@ export const getOrders = new Elysia().use(auth).get(
       orders: allOrders,
       pageIndex,
       perPage: 10,
-      totalCount: ordersCount.count,
+      totalCount: ordersCount.count ?? 0,
     }
   },
   {
     query: t.Object({
-      pageIndex: t.Numeric({ minimum: 0 }),
+      pageIndex: t.Optional(t.Numeric({ minimum: 0 })),
       status: createSelectSchema(orders).properties.status,
     }),
     response: {
@@ -46,15 +47,15 @@ export const getOrders = new Elysia().use(auth).get(
           t.Object({
             id: t.String(),
             status: createSelectSchema(orders).properties.status,
-            totalInCents: t.Number({ default: 0 }),
+            totalInCents: t.Number(),
             createdAt: t.Nullable(t.Date()),
-            quantity: t.Number({ default: 0 }),
+            quantity: t.Number(),
           }),
         ),
 
-        pageIndex: t.Number({ default: 0 }),
-        perPage: t.Number({ default: 10 }),
-        totalCount: t.Number({ default: 0 }),
+        pageIndex: t.Number(),
+        perPage: t.Number(),
+        totalCount: t.Number(),
       }),
     },
   },

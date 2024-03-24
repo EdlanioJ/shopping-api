@@ -4,7 +4,7 @@ import { db } from '@/db/connection'
 import { addresses } from '@/db/schema'
 
 export const addAdress = new Elysia().use(auth).post(
-  '/addresses',
+  '/',
   async ({ getCurrentUser, body, set }) => {
     const { sub } = await getCurrentUser()
     await db.insert(addresses).values({

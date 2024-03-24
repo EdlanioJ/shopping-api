@@ -6,11 +6,11 @@ import { db } from '@/db/connection'
 import { products, reviews, users } from '@/db/schema'
 
 export const getProductReviews = new Elysia().use(auth).get(
-  '/product/:id/reviews',
+  '/:id/reviews',
   async ({ getCurrentUser, params, query }) => {
     await getCurrentUser()
     const { id } = params
-    const { pageIndex } = query
+    const pageIndex = query.pageIndex ?? 0
     const sq = db
       .select({
         id: reviews.id,
@@ -38,7 +38,11 @@ export const getProductReviews = new Elysia().use(auth).get(
       .groupBy(products.id)
 
     return {
-      product,
+      product: {
+        ...product,
+        reviewsCount: product.reviewsCount ?? 0,
+        ratingAvg: product.ratingAvg ?? 0,
+      },
       reviews: allReviews,
       pageIndex,
       perPage: 10,
@@ -49,7 +53,7 @@ export const getProductReviews = new Elysia().use(auth).get(
       id: t.String(),
     }),
     query: t.Object({
-      pageIndex: t.Numeric({ minimum: 0 }),
+      pageIndex: t.Optional(t.Numeric({ minimum: 0 })),
     }),
     response: {
       200: t.Object({
@@ -57,20 +61,20 @@ export const getProductReviews = new Elysia().use(auth).get(
           id: t.String(),
           name: t.String(),
           image: t.String(),
-          reviewsCount: t.Number({ default: 0 }),
-          ratingAvg: t.Number({ default: 0 }),
+          reviewsCount: t.Number(),
+          ratingAvg: t.Number(),
         }),
         reviews: t.Array(
           t.Object({
             id: t.String(),
             userName: t.String(),
-            rating: t.Number({ default: 0 }),
+            rating: t.Number(),
             comment: t.String(),
             createdAt: t.Nullable(t.Date()),
           }),
         ),
-        pageIndex: t.Number({ default: 0 }),
-        perPage: t.Number({ default: 10 }),
+        pageIndex: t.Number(),
+        perPage: t.Number(),
       }),
     },
   },

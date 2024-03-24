@@ -5,7 +5,7 @@ import { favorites } from '@/db/schema'
 import { and, eq } from 'drizzle-orm'
 
 export const removeFavorite = new Elysia().use(auth).delete(
-  '/favorites/:productId',
+  '/:productId',
   async ({ getCurrentUser, params, set }) => {
     const { sub } = await getCurrentUser()
     const { productId } = params

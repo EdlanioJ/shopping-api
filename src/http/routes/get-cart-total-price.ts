@@ -5,7 +5,7 @@ import { carts, products } from '@/db/schema'
 import { eq, sql } from 'drizzle-orm'
 
 export const getCartTotalPrice = new Elysia().use(auth).get(
-  '/cart/price',
+  '/price',
   async ({ getCurrentUser }) => {
     const { sub } = await getCurrentUser()
     const sq = db

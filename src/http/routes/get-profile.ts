@@ -1,9 +1,10 @@
 import { Elysia, t } from 'elysia'
 import { auth } from '../auth'
 import { db } from '@/db/connection'
+import { NotFoundError } from './errors/not-found-error'
 
 export const getProfile = new Elysia().use(auth).get(
-  '/profile',
+  '/',
   async ({ getCurrentUser }) => {
     const { sub } = await getCurrentUser()
 
@@ -17,7 +18,7 @@ export const getProfile = new Elysia().use(auth).get(
       },
     })
 
-    if (!user) throw new Error('User not found')
+    if (!user) throw new NotFoundError()
 
     return user
   },

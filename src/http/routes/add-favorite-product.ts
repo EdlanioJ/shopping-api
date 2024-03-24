@@ -4,7 +4,7 @@ import { db } from '@/db/connection'
 import { favorites } from '@/db/schema'
 
 export const addFavoriteProduct = new Elysia().use(auth).post(
-  '/favorite/:productId',
+  '/:productId',
   async ({ getCurrentUser, params, set }) => {
     const { sub } = await getCurrentUser()
     const { productId } = params

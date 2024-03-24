@@ -5,7 +5,7 @@ import { carts } from '@/db/schema'
 import { and, eq } from 'drizzle-orm'
 
 export const updateCartItem = new Elysia().use(auth).put(
-  '/cart/:productId',
+  '/:productId',
   async ({ getCurrentUser, params, body, set }) => {
     const { sub } = await getCurrentUser()
     const { productId } = params

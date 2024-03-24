@@ -5,7 +5,7 @@ import { users } from '@/db/schema'
 import { eq } from 'drizzle-orm'
 
 export const updateUserShippingAddress = new Elysia().use(auth).put(
-  '/user/shipping/:addressId',
+  '/shipping/:addressId',
   async ({ getCurrentUser, params, set }) => {
     const { sub } = await getCurrentUser()
     const { addressId } = params

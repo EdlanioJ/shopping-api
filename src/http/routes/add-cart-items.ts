@@ -4,7 +4,7 @@ import { db } from '@/db/connection'
 import { carts } from '@/db/schema'
 
 export const addCartItems = new Elysia().use(auth).post(
-  '/cart',
+  '/',
   async ({ getCurrentUser, body, set }) => {
     const { sub } = await getCurrentUser()
     const { items } = body

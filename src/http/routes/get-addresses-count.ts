@@ -5,7 +5,7 @@ import { eq, sql } from 'drizzle-orm'
 import { addresses } from '@/db/schema'
 
 export const getAddressesCount = new Elysia().use(auth).get(
-  '/addresses/count',
+  '/count',
   async ({ getCurrentUser }) => {
     const { sub } = await getCurrentUser()
 

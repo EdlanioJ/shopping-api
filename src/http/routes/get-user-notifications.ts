@@ -8,7 +8,8 @@ export const getUserNotifications = new Elysia().use(auth).get(
   '/notifications',
   async ({ getCurrentUser, query }) => {
     const { sub } = await getCurrentUser()
-    const { pageIndex } = query
+    const pageIndex = query.pageIndex ?? 0
+
     const sq = db
       .select()
       .from(notifications)
@@ -25,14 +26,14 @@ export const getUserNotifications = new Elysia().use(auth).get(
 
     return {
       notifications: allNotifications,
-      totalCount: notificationsCount.count,
+      totalCount: notificationsCount.count ?? 0,
       pageIndex,
       perPage: 10,
     }
   },
   {
     query: t.Object({
-      pageIndex: t.Numeric({ minimum: 0 }),
+      pageIndex: t.Optional(t.Numeric({ minimum: 0 })),
     }),
     response: {
       200: t.Object({
@@ -54,9 +55,9 @@ export const getUserNotifications = new Elysia().use(auth).get(
             ),
           }),
         ),
-        pageIndex: t.Number({ default: 0 }),
-        perPage: t.Number({ default: 10 }),
-        totalCount: t.Number({ default: 0 }),
+        pageIndex: t.Number(),
+        perPage: t.Number(),
+        totalCount: t.Number(),
       }),
     },
   },

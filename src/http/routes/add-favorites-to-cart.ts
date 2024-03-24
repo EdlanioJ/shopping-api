@@ -5,7 +5,7 @@ import { carts, favorites } from '@/db/schema'
 import { eq } from 'drizzle-orm'
 
 export const addFavoritesToCart = new Elysia().use(auth).post(
-  '/favorites/cart',
+  '/cart',
   async ({ getCurrentUser, set }) => {
     const { sub } = await getCurrentUser()
 

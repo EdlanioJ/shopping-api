@@ -5,7 +5,7 @@ import { products, reviews } from '@/db/schema'
 import { eq, sql } from 'drizzle-orm'
 
 export const getProductDetails = new Elysia().use(auth).get(
-  '/products/:id',
+  '/:id',
   async ({ getCurrentUser, params }) => {
     const { sub } = await getCurrentUser()
 
@@ -33,7 +33,12 @@ export const getProductDetails = new Elysia().use(auth).get(
         and(eq(fields.productId, id), eq(fields.userId, sub)),
     })
 
-    return { ...product, isFavorite: !!favorite }
+    return {
+      ...product,
+      rating: product.rating ?? 0,
+      review: product.review ?? 0,
+      isFavorite: !!favorite,
+    }
   },
   {
     params: t.Object({
@@ -44,10 +49,10 @@ export const getProductDetails = new Elysia().use(auth).get(
         id: t.String(),
         name: t.String(),
         image: t.String(),
-        pricePriceInCents: t.Number({ default: 0 }),
+        pricePriceInCents: t.Number(),
         description: t.Nullable(t.String()),
-        review: t.Number({ default: 0 }),
-        rating: t.Nullable(t.Number({ default: 0 })),
+        review: t.Number(),
+        rating: t.Number(),
         isFavorite: t.Boolean(),
       }),
     },

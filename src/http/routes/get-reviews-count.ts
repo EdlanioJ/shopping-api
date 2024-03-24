@@ -5,7 +5,7 @@ import { eq, sql } from 'drizzle-orm'
 import { reviews } from '@/db/schema'
 
 export const getReviewsCount = new Elysia().use(auth).get(
-  '/reviews/count',
+  '/count',
   async ({ getCurrentUser }) => {
     const { sub } = await getCurrentUser()
     const [review] = await db
@@ -21,7 +21,7 @@ export const getReviewsCount = new Elysia().use(auth).get(
   {
     response: {
       200: t.Object({
-        count: t.Number({ default: 0 }),
+        count: t.Number(),
       }),
     },
   },

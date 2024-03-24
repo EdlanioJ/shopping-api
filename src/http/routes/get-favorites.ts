@@ -6,11 +6,11 @@ import { db } from '@/db/connection'
 import { products, favorites } from '@/db/schema'
 
 export const getFavorites = new Elysia().use(auth).get(
-  '/favorites',
+  '/',
   async ({ getCurrentUser, query }) => {
     const { sub } = await getCurrentUser()
 
-    const { pageIndex } = query
+    const pageIndex = query.pageIndex ?? 0
     const sql = db
       .select({
         id: products.id,
@@ -32,12 +32,12 @@ export const getFavorites = new Elysia().use(auth).get(
       products: allProducts,
       pageIndex,
       perPage: 10,
-      totalCount: countProducts.count,
+      totalCount: countProducts.count ?? 0,
     }
   },
   {
     query: t.Object({
-      pageIndex: t.Numeric({ minimum: 0 }),
+      pageIndex: t.Optional(t.Numeric({ minimum: 0 })),
     }),
     response: {
       200: t.Object({
@@ -46,12 +46,12 @@ export const getFavorites = new Elysia().use(auth).get(
             id: t.String(),
             name: t.String(),
             image: t.String(),
-            priceInCents: t.Number({ default: 0 }),
+            priceInCents: t.Number(),
           }),
         ),
-        pageIndex: t.Number({ default: 0 }),
-        perPage: t.Number({ default: 10 }),
-        totalCount: t.Number({ default: 0 }),
+        pageIndex: t.Number(),
+        perPage: t.Number(),
+        totalCount: t.Number(),
       }),
     },
   },

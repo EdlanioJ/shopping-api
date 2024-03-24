@@ -5,7 +5,7 @@ import { carts } from '@/db/schema'
 import { and, eq } from 'drizzle-orm'
 
 export const removeCartItem = new Elysia().use(auth).delete(
-  '/cart/:productId',
+  '/:productId',
   async ({ getCurrentUser, params, set }) => {
     const { sub } = await getCurrentUser()
     const { productId } = params

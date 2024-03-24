@@ -3,7 +3,7 @@ import { auth } from '../auth'
 import { db } from '@/db/connection'
 
 export const getUserAddresses = new Elysia().use(auth).get(
-  '/addresses',
+  '/',
   async ({ getCurrentUser }) => {
     const { sub } = await getCurrentUser()
 

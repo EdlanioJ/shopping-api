@@ -5,10 +5,10 @@ import { products, reviews } from '@/db/schema'
 import { count, eq } from 'drizzle-orm'
 
 export const getUserReviews = new Elysia().use(auth).get(
-  '/reviews/me',
+  '/me',
   async ({ getCurrentUser, query }) => {
     const { sub } = await getCurrentUser()
-    const { pageIndex } = query
+    const pageIndex = query.pageIndex ?? 0
 
     const sq = db
       .select({
@@ -31,12 +31,12 @@ export const getUserReviews = new Elysia().use(auth).get(
       reviews: allReviews,
       pageIndex,
       perPage: 10,
-      totalCount: reviewsCount.count,
+      totalCount: reviewsCount.count ?? 0,
     }
   },
   {
     query: t.Object({
-      pageIndex: t.Numeric({ minimum: 0 }),
+      pageIndex: t.Optional(t.Numeric({ minimum: 0 })),
     }),
 
     response: {
@@ -52,9 +52,9 @@ export const getUserReviews = new Elysia().use(auth).get(
             productImage: t.String(),
           }),
         ),
-        pageIndex: t.Number({ default: 0 }),
-        perPage: t.Number({ default: 10 }),
-        totalCount: t.Number({ default: 0 }),
+        pageIndex: t.Number(),
+        perPage: t.Number(),
+        totalCount: t.Number(),
       }),
     },
   },
