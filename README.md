@@ -19,20 +19,21 @@ To get started with this project, run the steps below.
 To run this project, you will need:
 
 * install [bun](https://bun.sh/).
-* Create a free account in [uploadcare](https://uploadcare.com/).
+* Create a free account in [Uploadcare](https://uploadcare.com/).
+* Create a free account in [Stripe](https://stripe.com/).
 
 ### Installation
 
 1. Clone the repo
 
-  ```sh
-    git clone https://github.com/EdlanioJ/shopping-api.git
-  ```
+```sh
+git clone https://github.com/EdlanioJ/shopping-api.git
+```
 
 2. Install NPM packages
 
 ```sh
-  bun install
+bun install
 ```
 
 3. Enter your env variables in `.env.local`
@@ -66,11 +67,11 @@ Create a new user
 
 ##### Request
 ```http
-POST /register
+POST /auth/register
 ```
 
 ```sh
-curl --request POST --url 'http://localhost:3000/register' --header 'Content-Type: application/json' --data '{ "name": "Foo", "email": "foo@example.com", "password": "12345672" }'
+curl --request 'POST' --url 'http://localhost:3000/auth/register' --header 'Content-Type: application/json' --data '{ "name": "Foo", "email": "foo@example.com", "password": "12345672" }'
 ```
 
 
@@ -93,11 +94,11 @@ Content-Length: 0
 
 ##### Request
 ```http
-POST /login
+POST /auth/login
 ```
 
 ```sh
-curl --request POST --url 'http://localhost:3000/login' --header 'Content-Type: application/json' --data '{ "email": "foo@example.com", "password": "12345672" }'
+curl --request 'POST' --url 'http://localhost:3000/auth/login' --header 'Content-Type: application/json' --data '{ "email": "foo@example.com", "password": "12345672" }'
 ```
 ##### Response
 
@@ -126,11 +127,11 @@ Content-Length: 183
 
 ##### Request
 ```http
-GET /products
+GET /products/
 ```
 
 ```sh
-curl --request GET --url 'http://localhost:3000/products?category=popular&pageIndex=0' --header 'Authorization: Bearer YOUR_TOKEN'
+curl --request 'GET' --url 'http://localhost:3000/products/?category=popular&pageIndex=0' --header 'Authorization: Bearer YOUR_TOKEN'
 ```
 
 ##### Response
@@ -167,11 +168,11 @@ Content-Length: 426
 
 ##### Request
 ```http
-  GET /products/:id
+GET /products/:id
 ```
 
 ```sh
-  curl --request GET  --url 'http://localhost:3000/products/mz2nk6csoc6p2mewmfoya8s4' --header 'Authorization: Bearer YOUR_TOKEN'
+  curl --request 'GET'  --url 'http://localhost:3000/products/mz2nk6csoc6p2mewmfoya8s4' --header 'Authorization: Bearer YOUR_TOKEN'
 ```
 
 ##### Response
@@ -207,11 +208,11 @@ Content-Length: 337
 
 ##### Request
 ```http
-  POST /cart
+POST /cart/
 ```
 
 ```sh
-curl --request POST --url 'http://localhost:3000/cart' --header 'Authorization: Bearer YOUR_TOKEN' --header 'Content-Type: application/json' --data '{ "items": [{"productId": "mz2nk6csoc6p2mewmfoya8s4", "quantity": 1 }] }'
+curl --request 'POST' --url 'http://localhost:3000/cart/' --header 'Authorization: Bearer YOUR_TOKEN' --header 'Content-Type: application/json' --data '{ "items": [{"productId": "mz2nk6csoc6p2mewmfoya8s4", "quantity": 1 }] }'
 ```
 
 ##### Response
@@ -227,6 +228,7 @@ Access-Control-Exposed-Headers: *
 Date: Sat, 23 Mar 2024 17:17:27 GMT
 Content-Length: 0
 ```
+
 #### Update Product in Cart
 <p>Update a product in cart</p>
 
@@ -237,7 +239,7 @@ PUT /cart/{productId}
 ```
 
 ```sh
-curl --request PUT --url 'http://localhost:3000/cart/mz2nk6csoc6p2mewmfoya8s4' --header 'Authorization: Bearer YOUR_TOKEN' --header 'Content-Type: application/json' --data '{ "quantity": 2 }'
+curl --request 'PUT' --url 'http://localhost:3000/cart/mz2nk6csoc6p2mewmfoya8s4' --header 'Authorization: Bearer YOUR_TOKEN' --header 'Content-Type: application/json' --data '{ "quantity": 2 }'
 ```
 
 ##### Response
@@ -260,11 +262,11 @@ Content-Length: 0
 ##### Request
 
 ```http
-GET /cart
+GET /cart/
 ```
 
 ```sh
-curl --request GET --url 'http://localhost:3000/cart?pageIndex=0' --header 'Authorization: Bearer YOUR_TOKEN'
+curl --request 'GET' --url 'http://localhost:3000/cart/?pageIndex=0' --header 'Authorization: Bearer YOUR_TOKEN'
 ```
 
 ##### Response
@@ -308,7 +310,7 @@ GET /cart/price
 ```
 
 ```sh
-curl --request GET --url 'http://localhost:3000/cart/price' --header 'Authorization: Bearer YOUR_TOKEN'
+curl --request 'GET' --url 'http://localhost:3000/cart/price' --header 'Authorization: Bearer YOUR_TOKEN'
 ```
 
 ##### Response
@@ -340,7 +342,7 @@ DELETE /cart/{productId}
 ```
 
 ```sh
-curl --request DELETE --url 'http://localhost:3000/cart/mz2nk6csoc6p2mewmfoya8s4' --header 'Authorization: Bearer YOUR_TOKEN'
+curl --request 'DELETE' --url 'http://localhost:3000/cart/mz2nk6csoc6p2mewmfoya8s4' --header 'Authorization: Bearer YOUR_TOKEN'
 ```
 
 ##### Response
@@ -352,6 +354,135 @@ Access-Control-Allow-Credentials: true
 Vary: *
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: DELETE
+Access-Control-Exposed-Headers: *
+Date: Sat, 23 Mar 2024 21:43:42 GMT
+Content-Length: 0
+```
+
+### Favorites
+
+#### Add Product to Favorite
+
+<p>Add a product to favorite</p>
+
+##### Request
+
+```http
+POST /favorites/{productId}
+```
+
+```sh
+curl --request 'POST' --url 'http://localhost:3000/favorites/mz2nk6csoc6p2mewmfoya8s4' --header 'Authorization: Bearer YOUR_TOKEN'
+```
+
+##### Response
+
+```http
+HTTP/1.1 204 No Content
+Access-Control-Allow-Headers: *
+Access-Control-Allow-Credentials: true
+Vary: *
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: POST
+Access-Control-Exposed-Headers: *
+Date: Sat, 23 Mar 2024 21:43:42 GMT
+Content-Length: 0
+```
+
+#### Remove Product from Favorite
+
+<p>Remove a product from favorite</p>
+
+##### Request
+
+```http
+DELETE /favorites/{productId}
+```
+
+```sh
+curl --request 'DELETE' --url 'http://localhost:3000/favorites/mz2nk6csoc6p2mewmfoya8s4' --header 'Authorization: Bearer YOUR_TOKEN'
+```
+
+##### Response
+
+```http
+HTTP/1.1 204 No Content
+Access-Control-Allow-Headers: *
+Access-Control-Allow-Credentials: true
+Vary: *
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: DELETE
+Access-Control-Exposed-Headers: *
+Date: Sat, 23 Mar 2024 21:43:42 GMT
+Content-Length: 0
+```
+
+#### Get Favorite Products
+
+<p>Get favorite products</p>
+
+##### Request
+
+```http
+GET /favorites/
+```
+
+```sh
+curl --request 'GET' --url 'http://localhost:3000/favorites/?pageIndex=0' --header 'Authorization: Bearer YOUR_TOKEN'
+```
+
+##### Response
+
+```http
+HTTP/1.1 200 OK
+Access-Control-Allow-Headers: *
+Access-Control-Allow-Credentials: true
+Vary: *
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET
+Content-Type: application/json;charset=utf-8
+Access-Control-Exposed-Headers: *
+Date: Sat, 23 Mar 2024 21:43:42 GMT
+Content-Length: 297
+
+{
+  "products": [
+    {
+      "name": "Floor Lamp with Reading Light",
+      "id": "mz2nk6csoc6p2mewmfoya8s4",
+      "image": "https://ucarecdn.com/b6d6ba6e-21e8-4781-9ffa-5249341267a1/FloorLampwithReadingLight.jpg",
+      "priceInCents": 1299900,
+    }
+  ]
+  "pageIndex": 0,
+  "perPage": 10,
+  "totalCount": 1
+}
+```
+
+#### Move Products from Favorite to Cart
+
+<p>Move a product from favorite to cart</p>
+
+##### Request
+
+```http
+POST /favorites/cart
+```
+
+```sh
+curl --request 'POST' --url 'http://localhost:3000/favorites/cart' --header 'Authorization: Bearer YOUR_TOKEN'
+```
+
+##### Response
+
+```http
+HTTP/1.1 204 No Content
+Access-Control-Allow-Headers: *
+Access-Control-Allow-Credentials: true
+Vary: *
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: POST
 Access-Control-Exposed-Headers: *
 Date: Sat, 23 Mar 2024 21:43:42 GMT
 Content-Length: 0

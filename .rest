@@ -1,6 +1,6 @@
 ###
 ### login ###
-POST http://localhost:3000/login
+POST http://localhost:3000/auth/login
 content-type: application/json
 
 {
@@ -10,7 +10,7 @@ content-type: application/json
 
 ###
 ### Register a new user ###
-POST  http://localhost:3000/register
+POST  http://localhost:3000/auth/register
 content-type: application/json
 
 {
@@ -27,7 +27,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3dm01dXBlbm5hNHVrNjNwMXcze
 
 ###
 ### Get all products ###
-GET http://localhost:3000/products?category=popular&pageIndex=1
+GET http://localhost:3000/products/?category=popular&pageIndex=1
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjdnJwaHo5Nm4ydHVpNnBmeXltdnpvNHAiLCJuYW1lIjoiRWRsYW5lbyBNYW51ZWwiLCJleHAiOjE3MTEyOTA2Njl9.BHksIP6varCThH0Cd5HmfxgYWkjwvVLNCJskySbWz6k
 
@@ -39,7 +39,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjdnJwaHo5Nm4ydHVpNnBmeXltd
 
 ###
 ### Get all cart items ###
-GET http://localhost:3000/cart?pageIndex=0
+GET http://localhost:3000/cart/?pageIndex=0
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjdnJwaHo5Nm4ydHVpNnBmeXltdnpvNHAiLCJuYW1lIjoiRWRsYW5lbyBNYW51ZWwiLCJleHAiOjE3MTEzODY1Mjl9.jH1KSgP4rIHaiqMORKdT--4F26H_3u17HN1M3pEPGHs
 
