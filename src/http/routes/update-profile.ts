@@ -4,7 +4,7 @@ import { db } from '@/db/connection'
 import { users } from '@/db/schema'
 import { eq } from 'drizzle-orm'
 
-export const updateProfile = new Elysia().use(auth).put(
+export const updateProfile = new Elysia().use(auth).patch(
   '/',
   async ({ body, getCurrentUser, set }) => {
     const { sub } = await getCurrentUser()
