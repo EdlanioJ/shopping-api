@@ -3,6 +3,7 @@ import { auth } from '../auth'
 import { db } from '@/db/connection'
 import { carts, favorites } from '@/db/schema'
 import { eq } from 'drizzle-orm'
+import { NotFoundError } from './errors/not-found-error'
 
 export const addFavoritesToCart = new Elysia().use(auth).post(
   '/cart',
@@ -14,7 +15,8 @@ export const addFavoritesToCart = new Elysia().use(auth).post(
       columns: { productId: true },
     })
 
-    if (favoriteItems.length === 0) throw new Error('Empty favourite list')
+    if (favoriteItems.length === 0)
+      throw new NotFoundError('Empty favourite list')
 
     await db
       .insert(carts)

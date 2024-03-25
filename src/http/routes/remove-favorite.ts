@@ -9,7 +9,6 @@ export const removeFavorite = new Elysia().use(auth).delete(
   async ({ getCurrentUser, params, set }) => {
     const { sub } = await getCurrentUser()
     const { productId } = params
-    console.log(productId)
 
     await db
       .delete(favorites)

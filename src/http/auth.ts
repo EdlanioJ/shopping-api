@@ -5,6 +5,7 @@ import { env } from '../env'
 import { AuthenticationError } from './routes/errors/authetication-error'
 import { UnauthorizedError } from './routes/errors/unauthorized-error'
 import { NotFoundError } from './routes/errors/not-found-error'
+import { BadRequestError } from './routes/errors/bad-request-error'
 
 const jwtPayloadSchema = t.Object({
   sub: t.String(),
@@ -16,6 +17,7 @@ export const auth = new Elysia()
     AUTHENTICATION: AuthenticationError,
     UNAUTHORIZED: UnauthorizedError,
     NOTFOUND: NotFoundError,
+    'BAD REQUEST': BadRequestError,
   })
   .onError(({ code, error, set }) => {
     console.error(error)
@@ -28,6 +30,9 @@ export const auth = new Elysia()
         return { code, message: error.message }
       case 'NOTFOUND':
         set.status = 404
+        return { code, message: error.message }
+      case 'BAD REQUEST':
+        set.status = 'Bad Request'
         return { code, message: error.message }
       default:
         return { code, message: error.message }

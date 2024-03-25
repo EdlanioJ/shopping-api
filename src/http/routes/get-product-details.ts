@@ -1,8 +1,10 @@
 import { Elysia, t } from 'elysia'
-import { auth } from '../auth'
-import { db } from '../../db/connection'
-import { products, reviews } from '@/db/schema'
 import { eq, sql } from 'drizzle-orm'
+
+import { auth } from '@/http/auth'
+import { db } from '@/db/connection'
+import { products, reviews } from '@/db/schema'
+import { NotFoundError } from '@/http/routes/errors/not-found-error'
 
 export const getProductDetails = new Elysia().use(auth).get(
   '/:id',
@@ -26,7 +28,7 @@ export const getProductDetails = new Elysia().use(auth).get(
       .leftJoin(reviews, eq(reviews.productId, products.id))
       .groupBy(products.id)
 
-    if (!product) throw new Error('Product not found')
+    if (!product) throw new NotFoundError('Product not found')
 
     const favorite = await db.query.favorites.findFirst({
       where: (fields, { and, eq }) =>

@@ -1,7 +1,9 @@
 import { Elysia, t } from 'elysia'
-import { auth } from '../auth'
+
+import { auth } from '@/http/auth'
 import { db } from '@/db/connection'
 import { favorites } from '@/db/schema'
+import { BadRequestError } from '@/http/routes/errors/bad-request-error'
 
 export const addFavoriteProduct = new Elysia().use(auth).post(
   '/:productId',
@@ -14,7 +16,7 @@ export const addFavoriteProduct = new Elysia().use(auth).post(
         and(eq(fields.userId, sub), eq(fields.productId, productId)),
     })
 
-    if (favorite) throw new Error('Product already in favorites')
+    if (favorite) throw new BadRequestError('Product already in favorites')
 
     await db.insert(favorites).values({ userId: sub, productId })
     set.status = 'No Content'

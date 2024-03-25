@@ -1,8 +1,9 @@
 import { Elysia, t } from 'elysia'
-import { auth } from '../auth'
-import { db } from '@/db/connection'
-import { users } from '@/db/schema'
 import { eq } from 'drizzle-orm'
+
+import { auth } from '@/http/auth'
+import { users } from '@/db/schema'
+import { db } from '@/db/connection'
 
 export const updateProfile = new Elysia().use(auth).patch(
   '/',
